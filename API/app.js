@@ -7,12 +7,12 @@ const helmet = require('helmet'); //to-do investigate
 //logging
 const morgan = require('morgan');
 //database
-const { connectDatabase } = require('./services/database/mongo');
+const { connectDatabase } = require('./src/services/database/mongo');
 //routes
-const testRoutes = require('./routes/test');
-const userRoutes = require('./routes/user');
+const testRoutes = require('./src/routes/test');
+const userRoutes = require('./src/routes/user');
 
-const { errorHandlingMiddleware } = require('./utils/error-handling/error-handler');
+const { errorHandlingMiddleware } = require('./src/utils/error-handling/error-handler');
 
 const app = express();
 
