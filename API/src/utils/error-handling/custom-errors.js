@@ -58,12 +58,23 @@ class UnknownError extends ErrorBase {
     }
 }
 
+class ExpressValidationError extends ErrorBase {
+    constructor(errors) {
+        let messages = [];
+        errors.forEach(error => {
+            messages.push(`${error.msg}`);
+        });
+        super(400, messages.join());
+    }
+}
+
 module.exports = {
     ErrorBase,
     ValidationFailedError,
     EntityAlreadyExists,
     EntityNotFoundError,
     InvalidPasswordError,
+    ExpressValidationError,
     UnknownError,
     TokenExpiredError,
     InvalidTokenError,

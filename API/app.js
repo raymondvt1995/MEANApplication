@@ -1,16 +1,14 @@
-//api
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-//security
-const helmet = require('helmet'); //to-do investigate
-//logging
+
+const helmet = require('helmet');
 const morgan = require('morgan');
-//database
+
 const { connectDatabase } = require('./src/services/database/mongo');
-//routes
-const testRoutes = require('./src/controllers/test-controller');
-const userRoutes = require('./src/controllers/user-controller');
+
+const testRoutes = require('./src/controllers/test/test-controller');
+const userRoutes = require('./src/controllers/user/user-controller');
 
 const { errorHandlingMiddleware } = require('./src/utils/error-handling/error-handling-middleware');
 
