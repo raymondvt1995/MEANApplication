@@ -9,13 +9,14 @@ const morgan = require('morgan');
 //database
 const { connectDatabase } = require('./src/services/database/mongo');
 //routes
-const testRoutes = require('./src/routes/test');
-const userRoutes = require('./src/routes/user');
+const testRoutes = require('./src/controllers/test-controller');
+const userRoutes = require('./src/controllers/user-controller');
 
-const { errorHandlingMiddleware } = require('./src/utils/error-handling/error-handler');
+const { errorHandlingMiddleware } = require('./src/utils/error-handling/error-handling-middleware');
 
 const app = express();
 
+app.use(morgan('combined'));
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(cors());

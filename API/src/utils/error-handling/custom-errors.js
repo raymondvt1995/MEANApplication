@@ -6,6 +6,12 @@ class ErrorBase extends Error {
     }
 }
 
+class ValidationFailedError extends ErrorBase {
+    constructor(message) {
+        super(400, message);
+    }
+}
+
 class EntityAlreadyExists extends ErrorBase {
     constructor(entity, message) {
         super(400, message);
@@ -28,6 +34,24 @@ class InvalidPasswordError extends ErrorBase {
     }
 }
 
+class TokenExpiredError extends ErrorBase {
+    constructor(){
+        super(401, 'Token expired');
+    }
+}
+
+class InvalidTokenError extends ErrorBase {
+    constructor(){
+        super(401, 'Invalid Token Provided');
+    }
+}
+
+class TokenNotPresentError extends ErrorBase {
+    constructor() {
+        super(401, 'Token not present in request');
+    }
+}
+
 class UnknownError extends ErrorBase {
     constructor(message) {
         super(412, message);
@@ -36,8 +60,12 @@ class UnknownError extends ErrorBase {
 
 module.exports = {
     ErrorBase,
+    ValidationFailedError,
     EntityAlreadyExists,
     EntityNotFoundError,
     InvalidPasswordError,
     UnknownError,
+    TokenExpiredError,
+    InvalidTokenError,
+    TokenNotPresentError
 };

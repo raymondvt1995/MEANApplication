@@ -12,20 +12,6 @@ async function handle(func, next) {
     }
 }
 
-async function errorHandlingMiddleware(err, req, res, next) {
-    if (err instanceof ErrorBase) {
-        err.statusCode = err.httpErrorCode;
-    } else {
-        err.statusCode = 500;
-    }
-
-    res.status(err.statusCode).json({
-        statusCode: err.statusCode,
-        message: err.message
-    });
-}
-
 module.exports = {
-    handle,
-    errorHandlingMiddleware
+    handle
 };
