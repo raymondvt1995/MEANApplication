@@ -11,7 +11,7 @@ async function tokenValidation(req, res, next) {
                 token = token.replace('Bearer ', '');
             }
 
-            const data = await security.validateToken(token);
+            const data = await security.validateAccessToken(token);
             req.requestUserId = data.id;
 
             next();

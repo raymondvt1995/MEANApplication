@@ -21,11 +21,7 @@ module.exports = {
 
         const createdUser = await user.save();
 
-        const token = await security.getToken(createdUser._id);
-
-        return {
-            token: token
-        };
+        return await security.getAcessAndRefreshTokens(createdUser._id);
     },
 
     delete: async (id) => {
@@ -89,10 +85,6 @@ module.exports = {
             throw new InvalidPasswordError();
         }
 
-        const token = await security.getToken(user._id);
-
-        return {
-            token: token
-        };
+        return await security.getAcessAndRefreshTokens(user._id);
     }
 }
