@@ -13,8 +13,8 @@ router.route('/user').post(validation.validate('createUser'), async (req, res, n
     }, next, req);
 });
 
-router.route('/user/login').post(async (req, res, next) => {
-    await handleAndValidate(validation.validate('loginUser'), async () => {
+router.route('/user/login').post(validation.validate('loginUser'), async (req, res, next) => {
+    await handleAndValidate(async () => {
         const token = await userService.login(req.body);
         res.send(token);
     }, next, req)

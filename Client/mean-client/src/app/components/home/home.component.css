@@ -1,0 +1,30 @@
+.container {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.header {
+  font-size: xx-large;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  margin: 5px;
+}
+
+.bold {
+  font-weight: bold;
+  width: 30px;
+}

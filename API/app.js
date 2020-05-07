@@ -9,7 +9,7 @@ const { connectDatabase } = require('./src/services/database/mongo');
 
 const testRoutes = require('./src/controllers/test/test-controller');
 const userRoutes = require('./src/controllers/user/user-controller');
-
+const tokenRoutes = require('./src/controllers/token/token-controller');
 const { errorHandlingMiddleware } = require('./src/utils/error-handling/error-handling-middleware');
 
 const app = express();
@@ -19,6 +19,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use('/', tokenRoutes);
 app.use('/', testRoutes);
 app.use('/', userRoutes);
 

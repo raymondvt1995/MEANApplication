@@ -21,7 +21,7 @@ module.exports = {
 
         const createdUser = await user.save();
 
-        return await security.getAcessAndRefreshTokens(createdUser._id);
+        return await security.getAccessAndRefreshTokens(createdUser._id);
     },
 
     delete: async (id) => {
@@ -69,11 +69,8 @@ module.exports = {
     },
 
     login: async (loginDTO) => {
-        if (!loginDTO.email || !loginDTO.password) {
-            throw new ValidationFailedError('Login detils provided!');
-        }
 
-        const user = await UserModel.findOne({ email: loginDTO.email });
+        const user = await UserModel.findOne({ email: loginDTO.email }).select('+password');
 
         if (!user) {
             throw new EntityNotFoundError('User', `User ${loginDTO.email} does not exist!`);
@@ -85,6 +82,10 @@ module.exports = {
             throw new InvalidPasswordError();
         }
 
-        return await security.getAcessAndRefreshTokens(user._id);
+        return await security.getAccessAndRefreshTokens(user._id);
+    },
+
+    logout: async (userId) => {
+        //Dont do anything for now..
     }
 }

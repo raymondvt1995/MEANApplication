@@ -13,39 +13,18 @@ module.exports = {
     },
 
     getAccessToken: async (userId) => {
-        const accessTokenExpiryTime = new Date();
-        accessTokenExpiryTime.setSeconds(accessTokenExpiryTime.getSeconds() + config.accessTokenExpiryTime);
-
-        return jwt.sign({
-            id: userId,
-            expiryTime: accessTokenExpiryTime
-        }, config.accessTokenSecret, {
-            expiresIn: config.accessTokenSecretExpiryTime // expires in 24 hours
-        });
+        return signJwtToken(userId, config.accessTokenSecret, config.accessTokenExpiryTime);
     },
 
-    getAcessAndRefreshTokens: async (userId) => {
-        const accessTokenExpiryTime = new Date();
-        accessTokenExpiryTime.setSeconds(accessTokenExpiryTime.getSeconds() + config.accessTokenExpiryTime);
-
-        const accessToken = jwt.sign({
-            id: userId,
-            expiryTime: accessTokenExpiryTime
-        }, config.accessTokenSecret, { expiresIn: config.accessTokenExpiryTime });
-
-        const refreshTokenExpiryTime = new Date();
-        refreshTokenExpiryTime.setSeconds(refreshTokenExpiryTime.getSeconds() + config.refreshTokenExpiryTime);
-
-        const refreshToken = jwt.sign({
-            id: userId,
-            expiryTime: refreshTokenExpiryTime
-        }, config.refreshTokenSecret, { expiresIn: config.refreshTokenExpiryTime });
+    getAccessAndRefreshTokens: async (userId) => {
+        const accessTokenDetails = signJwtToken(userId, config.accessTokenSecret, config.accessTokenExpiryTime);
+        const refreshTokenDetails = signJwtToken(userId, config.refreshTokenSecret, config.refreshTokenExpiryTime);
 
         return {
-            accessToken: accessToken,
-            accessTokenExpiryTime: accessTokenExpiryTime,
-            refreshToken: refreshToken,
-            refreshTokenExpiryTime: refreshTokenExpiryTime
+            accessToken: accessTokenDetails.token,
+            accessTokenExpiryTime: accessTokenDetails.expiryTime,
+            refreshToken: refreshTokenDetails.token,
+            refreshTokenExpiryTime: refreshTokenDetails.expiryTime
         };
     },
 
@@ -54,6 +33,10 @@ module.exports = {
             jwt.verify(token, config.accessTokenSecret, (err, decoded) => {
 
                 if (err) {
+                    if (err instanceof jwt.TokenExpiredError) {
+                        reject(new TokenExpiredError());
+                    }
+
                     reject(new InvalidTokenError());
                 }
 
@@ -65,8 +48,11 @@ module.exports = {
     validateRefreshToken: async (token) => {
         return new Promise((resolve, reject) => {
             jwt.verify(token, config.refreshTokenSecret, (err, decoded) => {
-
                 if (err) {
+                    if (err instanceof jwt.TokenExpiredError) {
+                        reject(new TokenExpiredError());
+                    }
+
                     reject(new InvalidTokenError());
                 }
 
@@ -75,3 +61,15 @@ module.exports = {
         })
     }
 };
+
+function signJwtToken(userId, secret, expiryTime) {
+    const tokenExpiryTime = new Date();
+    tokenExpiryTime.setSeconds(tokenExpiryTime.getSeconds() + expiryTime);
+
+    const token = jwt.sign({ id: userId, expiryTime: tokenExpiryTime }, secret, { expiresIn: expiryTime });
+
+    return {
+        token: token,
+        expiryTime: tokenExpiryTime
+    }
+}

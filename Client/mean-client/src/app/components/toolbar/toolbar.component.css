@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.header {
+  font-size: xx-large;
+}
+
+.header:hover {
+  cursor: pointer;
+}
+
+.login-button {
+  margin-right: 5px;
+}
+
+.register-button {
+  margin-left: 5px;
+}
