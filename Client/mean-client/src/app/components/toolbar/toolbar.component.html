@@ -1,7 +1,12 @@
 <mat-toolbar color="primary" class="container">
-  <h1 class="header text-center" [routerLink]="['/home']">M.E.A.N.</h1>
-  <div class="actions">
-    <button mat-raised-button class="login-button" [routerLink]="['/login']">login</button>
+  <h1 class="header text-center" [routerLink]="['/welcome']">M.E.A.N.</h1>
+  <h2 *ngIf="isLoggedIn && userEmail" [routerLink]="['/home']">{{ userEmail }}</h2>
+  <div class="actions" *ngIf="isLoggedIn === false">
+    <button mat-raised-button class="login-button" [routerLink]="['/login']">Login</button>
     <button mat-raised-button class="register-button" [routerLink]="['/register']">Register</button>
   </div>
+  <div class="actions" *ngIf="isLoggedIn">
+    <button mat-raised-button class="login-button" [routerLink]="['/welcome']">Logout</button>
+  </div>
+
 </mat-toolbar>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { RegisterUserModel } from 'src/app/_models/register-user-model';
 
 @Component({
   selector: 'app-register',
@@ -7,10 +8,10 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
   formGroup: FormGroup;
   titleAlert: string = 'This field is required';
-  post: any = '';
+
+  @Output() registerUser = new EventEmitter<RegisterUserModel>();
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -45,10 +46,6 @@ export class RegisterComponent implements OnInit {
     )
   }
 
-  get name() {
-    return this.formGroup.get('name') as FormControl
-  }
-
   private passwordMatcher(control: FormControl): { [s: string]: boolean } {
     if (
       this.formGroup &&
@@ -59,31 +56,9 @@ export class RegisterComponent implements OnInit {
     return null;
   }
 
-  checkPasswordsMatch(group: FormGroup) {
-    const confirmPasswordControl = group.get('confirmPassword');
-    const passwordControl = group.get('password');
-
-    if (passwordControl.touched && confirmPasswordControl.touched) {
-      const enteredPassword = passwordControl.value;
-      const enteredConfirmPassword = confirmPasswordControl.value;
-
-      console.log(enteredPassword);
-      console.log(enteredConfirmPassword);
-
-      if (enteredConfirmPassword !== enteredPassword) {
-        console.log('Passwords does not match');
-        return { 'confirmPasswords': false };
-      }
-
-      return null;
-    }
-
-    return null;
-  }
-
   checkPassword(control) {
     let enteredPassword = control.value
-    let passwordCheck = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+    let passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
     return (!passwordCheck.test(enteredPassword) && enteredPassword) ? { 'requirements': true } : null;
   }
 
@@ -104,7 +79,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(post) {
-    this.post = post;
+    console.log(post);
+    this.registerUser.emit({
+      name: post.name,
+      surname: post.surname,
+      email: post.email,
+      password: post.password
+    });
   }
 
 }

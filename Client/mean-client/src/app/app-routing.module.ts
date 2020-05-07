@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/features/login/login.component';
-import { RegisterComponent } from './components/features/register/register.component';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { RegisterContainerComponent } from './components/features/register/container/register-container.component';
+import { LoginContainerComponent } from './components/features/login/container/login-container.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { HomeContainerComponent } from './components/features/home/container/home-container.component';
 
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'welcome', component: LandingComponent },
+  { path: 'login', component: LoginContainerComponent },
+  { path: 'register', component: RegisterContainerComponent },
+  { path: 'home', component: HomeContainerComponent },
   { path: 'pagenotfound', component: PagenotfoundComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', redirectTo: 'pagenotfound', pathMatch: 'full' }
 ];
 
