@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RegisterUserModel } from 'src/app/_models/register-user-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,14 @@ export class RegisterComponent implements OnInit {
 
   @Output() registerUser = new EventEmitter<RegisterUserModel>();
 
-  constructor(private formBuilder: FormBuilder) { }
+  @Input()
+  set isLoggedIn(value: boolean) {
+    if (value) {
+      this.router.navigateByUrl('home');
+    }
+  }
+
+  constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.createForm();

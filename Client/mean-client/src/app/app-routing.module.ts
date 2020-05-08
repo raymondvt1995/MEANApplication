@@ -5,13 +5,14 @@ import { RegisterContainerComponent } from './components/features/register/conta
 import { LoginContainerComponent } from './components/features/login/container/login-container.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { HomeContainerComponent } from './components/features/home/container/home-container.component';
+import { AuthGuard } from './_core/guards/auth-guard.service';
 
 
 const routes: Routes = [
   { path: 'welcome', component: LandingComponent },
   { path: 'login', component: LoginContainerComponent },
   { path: 'register', component: RegisterContainerComponent },
-  { path: 'home', component: HomeContainerComponent },
+  { path: 'home', component: HomeContainerComponent, canActivate: [AuthGuard] },
   { path: 'pagenotfound', component: PagenotfoundComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', redirectTo: 'pagenotfound', pathMatch: 'full' }

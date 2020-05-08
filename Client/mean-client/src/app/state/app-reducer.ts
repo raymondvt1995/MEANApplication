@@ -56,7 +56,6 @@ export function reducer(state = initialAppState, action: AppActions): AppState {
                 token: null,
                 error: action.payload
             };
-
         }
 
         case AppActionTypes.LoadUserSuccess: {
@@ -65,7 +64,6 @@ export function reducer(state = initialAppState, action: AppActions): AppState {
                 user: action.payload,
                 error: ''
             };
-
         }
 
         case AppActionTypes.LoadUserFailed: {
@@ -74,7 +72,21 @@ export function reducer(state = initialAppState, action: AppActions): AppState {
                 user: null,
                 error: action.payload
             };
+        }
 
+        case AppActionTypes.DeleteUserSuccess: {
+            return {
+                ...state,
+                allUsers: state.allUsers.filter(x => x.id !== action.payload),
+                error: ''
+            };
+        }
+
+        case AppActionTypes.DeleteUserFailed: {
+            return {
+                ...state,
+                error: action.payload
+            };
         }
 
         case AppActionTypes.LoadAllUsersSuccess: {
@@ -110,6 +122,10 @@ export function reducer(state = initialAppState, action: AppActions): AppState {
                 ...state,
                 error: action.payload
             };
+        }
+
+        case AppActionTypes.LogoutUser: {
+            return initialAppState;
         }
 
         default:

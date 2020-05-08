@@ -37,6 +37,13 @@ router.route('/user/:id').put(async (req, res, next) => {
     }, next);
 });
 
+router.route('/user').get(async (req, res, next) => {
+    await handle(async () => {
+        const user = await userService.getAllUsers();
+        res.send(user);
+    }, next);
+});
+
 router.route('/user/:id').get(async (req, res, next) => {
     await handle(async () => {
         const user = await userService.getById(req.params.id);

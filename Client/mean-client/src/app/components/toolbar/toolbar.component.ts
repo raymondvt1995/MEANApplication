@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UserDetailsModel } from 'src/app/_models/user-details-model';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,10 +10,14 @@ export class ToolbarComponent implements OnInit {
 
   constructor() { }
 
-  @Input() userEmail: string;
+  @Output() logoutUser = new EventEmitter();
   @Input() isLoggedIn: boolean;
+  @Input() userDetails: UserDetailsModel;
 
   ngOnInit(): void {
   }
 
+  logout(): void {
+    this.logoutUser.emit();
+  }
 }

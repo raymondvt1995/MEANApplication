@@ -31,3 +31,8 @@ export const getAllUsers = createSelector(
     getAppRootState,
     state => state.allUsers
 );
+
+export const getError = createSelector(
+    getAppRootState,
+    state => state.error
+)

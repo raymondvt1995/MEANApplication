@@ -1,0 +1,18 @@
+table {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.valid-token {
+  color: lightgreen;
+}
+
+.expired-token {
+  color: red;
+}

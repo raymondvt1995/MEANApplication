@@ -55,6 +55,10 @@ module.exports = {
         return user;
     },
 
+    getAllUsers: async () => {
+        return await UserModel.find({});
+    },
+
     update: async (id, userDTO) => {
         const user = await UserModel.findById(id);
 

@@ -53,6 +53,30 @@ export class AppEffects {
     );
 
     @Effect()
+    deleteUser$: Observable<Action> = this.actions$.pipe(
+        ofType(appActions.AppActionTypes.DeleteUser),
+        map((action: appActions.DeleteUser) => action.payload),
+        mergeMap((id: string) =>
+            this.meanAPIService.deleteUser(id).pipe(
+                map(data => new appActions.DeleteUserSuccess(id)),
+                catchError(err => of(new appActions.DeleteUserFailed(err)))
+            )
+        )
+    );
+
+    @Effect()
+    loadAllUser$: Observable<Action> = this.actions$.pipe(
+        ofType(appActions.AppActionTypes.LoadAllUsers),
+        map((action: appActions.LoadAllUsers) => action),
+        mergeMap(() =>
+            this.meanAPIService.loadAllUsers().pipe(
+                map(data => new appActions.LoadAllUsersSuccess(data)),
+                catchError(err => of(new appActions.LoadAllUsersFailed(err)))
+            )
+        )
+    );
+
+    @Effect()
     refreshToken$: Observable<Action> = this.actions$.pipe(
         ofType(appActions.AppActionTypes.RefreshToken),
         map((action: appActions.RefreshToken) => action.payload),

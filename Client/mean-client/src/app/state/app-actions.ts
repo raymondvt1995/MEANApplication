@@ -18,13 +18,25 @@ export enum AppActionTypes {
     LoadUserSuccess = '[App] Load User Success',
     LoadUserFailed = '[App] Load User Failed',
 
-    LoadAllUsers = '[App] Load User',
+    DeleteUser = '[App] Delete User',
+    DeleteUserSuccess = '[App] Delete User Success',
+    DeleteUserFailed = '[App] Delete User Failed',
+
+    LoadAllUsers = '[App] Load All Users',
     LoadAllUsersSuccess = '[App] Load All Users Success',
     LoadAllUsersFailed = '[App] Load All Users Failed',
 
     RefreshToken = '[App] Refresh Token',
     RefreshTokenSuccess = '[App] Refresh Token Success',
     RefreshTokenFailed = '[App] Refresh Token Failed',
+
+    LogoutUser = '[App] Logout User'
+}
+
+export class LogoutUser implements Action {
+    readonly type = AppActionTypes.LogoutUser;
+
+    constructor() { }
 }
 
 export class LoginUser implements Action {
@@ -82,6 +94,24 @@ export class LoadUserFailed implements Action {
     constructor(public payload: string) { }
 }
 
+export class DeleteUser implements Action {
+    readonly type = AppActionTypes.DeleteUser;
+
+    constructor(public payload: string) { }
+}
+
+export class DeleteUserSuccess implements Action {
+    readonly type = AppActionTypes.DeleteUserSuccess;
+
+    constructor(public payload: string) { }
+}
+
+export class DeleteUserFailed implements Action {
+    readonly type = AppActionTypes.DeleteUserFailed;
+
+    constructor(public payload: string) { }
+}
+
 export class LoadAllUsers implements Action {
     readonly type = AppActionTypes.LoadAllUsers;
 
@@ -120,7 +150,8 @@ export class RefreshTokenFailed implements Action {
     constructor(public payload: string) { }
 }
 
-export type AppActions = LoginUser |
+export type AppActions = LogoutUser |
+    LoginUser |
     LoginUserSuccess |
     LoginUserFailed |
     RegisterUser |
@@ -129,6 +160,9 @@ export type AppActions = LoginUser |
     LoadUser |
     LoadUserSuccess |
     LoadUserFailed |
+    DeleteUser |
+    DeleteUserSuccess |
+    DeleteUserFailed |
     LoadAllUsers |
     LoadAllUsersSuccess |
     LoadAllUsersFailed |
